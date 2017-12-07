@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SoccerManagerV1.Models.Equipo>
+@{
+    ViewBag.Title = "ListaDeEquipos";
+}
+
+<h2>ListaDeEquipos</h2>
+
+<div class="row">
+    <div class="col-xs-4">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar ">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        </div>
+    </div>
+</div>
+<div>
+
+</div>
+<div>
+    <table class="table table-responsive table-bordered">
+        <thead>
+        <th>Nombre</th>
+        <th>Opciones</th>
+        </thead>
+        <tbody>
+            @foreach(var p in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(m => p.NombreEquipo)</td>  
+            </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+<div>
+    <button type="submit" class="btn btn-default">Volver</button>
+</div>

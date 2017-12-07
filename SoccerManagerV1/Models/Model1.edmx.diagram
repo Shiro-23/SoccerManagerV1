@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b4f37a04cbce4fb2a2d7a5e641798306" Name="Diagram1">
+        <EntityTypeShape EntityType="SoccerManagerV1Model.Equipo" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SoccerManagerV1Model.Estadio" Width="1.5" PointX="1.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SoccerManagerV1Model.Jugador" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SoccerManagerV1Model.Partido" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SoccerManagerV1Model.RegistroFecha" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SoccerManagerV1Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SoccerManagerV1Model.TablaPosiciones" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <AssociationConnector Association="SoccerManagerV1Model.fk_Equipo" ManuallyRouted="false" />
+        <AssociationConnector Association="SoccerManagerV1Model.FK_Jugador_Equipo" ManuallyRouted="false" />
+        <AssociationConnector Association="SoccerManagerV1Model.FK_Partido_Equipo" ManuallyRouted="false" />
+        <AssociationConnector Association="SoccerManagerV1Model.FK_Partido_Equipo1" ManuallyRouted="false" />
+        <AssociationConnector Association="SoccerManagerV1Model.FK_RegistroFecha_Estadio" ManuallyRouted="false" />
+        <AssociationConnector Association="SoccerManagerV1Model.fk_RegsitroPartido" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,28 @@
+﻿@model SoccerManagerV1.Models.Partido
+@{
+    ViewBag.Title = "Partido";
+}
+
+<h2>Partido</h2>
+
+<fieldset>
+    <legend>Formulario registro de jugador</legend>
+    @using (@Html.BeginForm("IniciarPartido", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="dl-horizontal">
+            <label>Hora</label>
+            <span>@Model.Hora</span>
+        </div>
+        <div class="dl-horizontal">
+            <span>@Model.Local</span>
+            <span>@Model.GolesLocal</span>
+            <label>V/S</label>
+            <span>@Model.GolesVisita</span>
+            <span>@Model.Visita</span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Iniciar</button>
+            
+        </div>
+    }
+</fieldset>

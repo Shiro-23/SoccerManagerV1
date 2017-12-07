@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "AñadirEstadio";
+}
+
+<h2>AñadirEstadio</h2>
+<fieldset>
+    <legend>Formulario registro de equipo</legend>
+    @using (@Html.BeginForm("GuardarEstadio", "Estadio", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <span class="col-md-2">
+                Nombre de estadio:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("Estadio", null, new { @class = "form-control", placeholder = "Nombre del Estadio" })
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="col-md-2">
+                Direccion:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("Direccion", null, new { @class = "form-control", placeholder = "Direccion" })
+            </span>
+        </div>
+    }
+    </fieldset>

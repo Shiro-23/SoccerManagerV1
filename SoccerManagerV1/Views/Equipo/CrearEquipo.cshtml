@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "CrearEquipo";
+}
+
+<h2>Crear Equipo</h2>
+
+<fieldset>
+    <legend>Formulario registro de equipo</legend>
+    @using (@Html.BeginForm("GuardarEquipo", "Equipo", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <span class="col-md-3">
+                Nombre de equipo:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("NombreEquipo", null, new { @class = "form-control", placeholder = "Nombre del Equipo" })
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="col-md-3">
+                Estadio local:
+            </span>
+            <span class="col-md-6 form-control">
+                @Html.DropDownList("Estadio", ViewBag.EstadioLista as SelectList,"Selecione Estadio",new { @class = "form-control" })
+            </span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-default">Volver</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    }
+</fieldset>

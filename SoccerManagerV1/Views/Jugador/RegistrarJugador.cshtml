@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "RegistrarJugador";
+}
+
+<h2>RegistrarJugador</h2>
+
+<fieldset>
+    <legend>Formulario registro de jugador</legend>
+    @using (@Html.BeginForm("GuardarJugador", "Jugador", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <span class="col-md-2">
+                Rut:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("Rut", null, new { @class = "form-control", placeholder = "Rut" })
+            </span>
+            <span class="col-md-1">
+                @Html.TextBox("DV", null, new { @class = "form-control", placeholder = "DV" })
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="col-md-2">
+                Nombres:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("Nombres", null, new { @class = "form-control", placeholder = "Nombres" })
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="col-md-2">
+                Apellido patermo:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("Apellidopaterno", null, new { @class = "form-control", placeholder = "Apellido paterno" })
+            </span>
+        </div><div class="form-group">
+    <span class="col-md-2">
+        Apellido materno:
+    </span>
+    <span class="col-md-6">
+        @Html.TextBox("Apellidomaterno", null, new { @class = "form-control", placeholder = "Apellido materno" })
+    </span>
+</div>
+    <div class="form-group">
+        <span class="col-md-2">
+            Fecha de nacimiento:
+        </span>
+        <span class="col-md-6" >
+                            
+        </span>
+    </div>
+    <div class="form-group">
+        <span class="col-md-2">
+            Equipo:
+        </span>
+        <span class="col-md-6">
+            @Html.DropDownList("Equipo", ViewBag.EquipoLista as SelectList, "Selecione Equipo", new { @class = "form-control" })
+        </span>
+    </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Volver</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+
+    }
+
+</fieldset>

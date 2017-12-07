@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SoccerManagerV1Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Equipo">
+          <Key>
+            <PropertyRef Name="NombreEquipo" />
+          </Key>
+          <Property Name="NombreEquipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EstadioEquipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estadio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estadio" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Referencia" Type="image" />
+        </EntityType>
+        <EntityType Name="Huella">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RutJugador" Type="int" Nullable="false" />
+          <Property Name="Huella" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jugador">
+          <Key>
+            <PropertyRef Name="Rut" />
+          </Key>
+          <Property Name="Rut" Type="int" Nullable="false" />
+          <Property Name="DV" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaNac" Type="date" Nullable="false" />
+          <Property Name="EquipoJugador" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EstadoSuspencion" Type="binary" MaxLength="1" />
+          <Property Name="TarjetaAmarilla" Type="int" />
+          <Property Name="Gol" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="CantPartido" Type="int" />
+        </EntityType>
+        <EntityType Name="Partido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+          <Property Name="GolesLocal" Type="int" />
+          <Property Name="GolesVisita" Type="int" />
+          <Property Name="FechaPartido" Type="date" Nullable="false" />
+          <Property Name="Local" Type="nvarchar" MaxLength="50" />
+          <Property Name="Visita" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RegistroFecha">
+          <Key>
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Estadio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TablaPosiciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreEqui" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PatidoJugado" Type="int" Nullable="false" />
+          <Property Name="GolFav" Type="int" Nullable="false" />
+          <Property Name="GolCont" Type="int" Nullable="false" />
+          <Property Name="GolDif" Type="int" Nullable="false" />
+          <Property Name="Puntos" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="TablaPosiciones" Type="Self.TablaPosiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="TablaPosiciones">
+              <PropertyRef Name="NombreEqui" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Huella_Jugador">
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+          <End Role="Huella" Type="Self.Huella" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jugador">
+              <PropertyRef Name="Rut" />
+            </Principal>
+            <Dependent Role="Huella">
+              <PropertyRef Name="RutJugador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jugador_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="Jugador">
+              <PropertyRef Name="EquipoJugador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partido_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="0..1" />
+          <End Role="Partido" Type="Self.Partido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="Partido">
+              <PropertyRef Name="Local" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partido_Equipo1">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="0..1" />
+          <End Role="Partido" Type="Self.Partido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="Partido">
+              <PropertyRef Name="Visita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegistroFecha_Estadio">
+          <End Role="Estadio" Type="Self.Estadio" Multiplicity="1" />
+          <End Role="RegistroFecha" Type="Self.RegistroFecha" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estadio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistroFecha">
+              <PropertyRef Name="Estadio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RegsitroPartido">
+          <End Role="RegistroFecha" Type="Self.RegistroFecha" Multiplicity="1" />
+          <End Role="Partido" Type="Self.Partido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegistroFecha">
+              <PropertyRef Name="Fecha" />
+            </Principal>
+            <Dependent Role="Partido">
+              <PropertyRef Name="FechaPartido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SoccerManagerV1Model1StoreContainer">
+          <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estadio" EntityType="Self.Estadio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Huella" EntityType="Self.Huella" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jugador" EntityType="Self.Jugador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partido" EntityType="Self.Partido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegistroFecha" EntityType="Self.RegistroFecha" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TablaPosiciones" EntityType="Self.TablaPosiciones" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Equipo" Association="Self.fk_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="TablaPosiciones" EntitySet="TablaPosiciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Huella_Jugador" Association="Self.FK_Huella_Jugador">
+            <End Role="Jugador" EntitySet="Jugador" />
+            <End Role="Huella" EntitySet="Huella" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jugador_Equipo" Association="Self.FK_Jugador_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Jugador" EntitySet="Jugador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partido_Equipo" Association="Self.FK_Partido_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Partido" EntitySet="Partido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partido_Equipo1" Association="Self.FK_Partido_Equipo1">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Partido" EntitySet="Partido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegistroFecha_Estadio" Association="Self.FK_RegistroFecha_Estadio">
+            <End Role="Estadio" EntitySet="Estadio" />
+            <End Role="RegistroFecha" EntitySet="RegistroFecha" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RegsitroPartido" Association="Self.fk_RegsitroPartido">
+            <End Role="RegistroFecha" EntitySet="RegistroFecha" />
+            <End Role="Partido" EntitySet="Partido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SoccerManagerV1Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Equipo">
+          <Key>
+            <PropertyRef Name="NombreEquipo" />
+          </Key>
+          <Property Name="NombreEquipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EstadioEquipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TablaPosiciones" Relationship="Self.fk_Equipo" FromRole="Equipo" ToRole="TablaPosiciones" />
+          <NavigationProperty Name="Jugador" Relationship="Self.FK_Jugador_Equipo" FromRole="Equipo" ToRole="Jugador" />
+          <NavigationProperty Name="Partido" Relationship="Self.FK_Partido_Equipo" FromRole="Equipo" ToRole="Partido" />
+          <NavigationProperty Name="Partido1" Relationship="Self.FK_Partido_Equipo1" FromRole="Equipo" ToRole="Partido" />
+        </EntityType>
+        <EntityType Name="Estadio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estadio1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Referencia" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="RegistroFecha" Relationship="Self.FK_RegistroFecha_Estadio" FromRole="Estadio" ToRole="RegistroFecha" />
+        </EntityType>
+        <EntityType Name="Huella">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RutJugador" Type="Int32" Nullable="false" />
+          <Property Name="Huella1" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Jugador" Relationship="Self.FK_Huella_Jugador" FromRole="Huella" ToRole="Jugador" />
+        </EntityType>
+        <EntityType Name="Jugador">
+          <Key>
+            <PropertyRef Name="Rut" />
+          </Key>
+          <Property Name="Rut" Type="Int32" Nullable="false" />
+          <Property Name="DV" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaNac" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EquipoJugador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EstadoSuspencion" Type="Binary" MaxLength="1" FixedLength="true" />
+          <Property Name="TarjetaAmarilla" Type="Int32" />
+          <Property Name="Gol" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CantPartido" Type="Int32" />
+          <NavigationProperty Name="Equipo" Relationship="Self.FK_Jugador_Equipo" FromRole="Jugador" ToRole="Equipo" />
+          <NavigationProperty Name="Huella" Relationship="Self.FK_Huella_Jugador" FromRole="Jugador" ToRole="Huella" />
+        </EntityType>
+        <EntityType Name="Partido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="GolesLocal" Type="Int32" />
+          <Property Name="GolesVisita" Type="Int32" />
+          <Property Name="FechaPartido" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Local" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Visita" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Equipo" Relationship="Self.FK_Partido_Equipo" FromRole="Partido" ToRole="Equipo" />
+          <NavigationProperty Name="Equipo1" Relationship="Self.FK_Partido_Equipo1" FromRole="Partido" ToRole="Equipo" />
+          <NavigationProperty Name="RegistroFecha" Relationship="Self.fk_RegsitroPartido" FromRole="Partido" ToRole="RegistroFecha" />
+        </EntityType>
+        <EntityType Name="RegistroFecha">
+          <Key>
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estadio" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estadio1" Relationship="Self.FK_RegistroFecha_Estadio" FromRole="RegistroFecha" ToRole="Estadio" />
+          <NavigationProperty Name="Partido" Relationship="Self.fk_RegsitroPartido" FromRole="RegistroFecha" ToRole="Partido" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TablaPosiciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreEqui" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PatidoJugado" Type="Int32" Nullable="false" />
+          <Property Name="GolFav" Type="Int32" Nullable="false" />
+          <Property Name="GolCont" Type="Int32" Nullable="false" />
+          <Property Name="GolDif" Type="Int32" Nullable="false" />
+          <Property Name="Puntos" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Equipo" Relationship="Self.fk_Equipo" FromRole="TablaPosiciones" ToRole="Equipo" />
+        </EntityType>
+        <Association Name="fk_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="TablaPosiciones" Type="Self.TablaPosiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="TablaPosiciones">
+              <PropertyRef Name="NombreEqui" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jugador_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="Jugador">
+              <PropertyRef Name="EquipoJugador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partido_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="0..1" />
+          <End Role="Partido" Type="Self.Partido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="Partido">
+              <PropertyRef Name="Local" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partido_Equipo1">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="0..1" />
+          <End Role="Partido" Type="Self.Partido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="NombreEquipo" />
+            </Principal>
+            <Dependent Role="Partido">
+              <PropertyRef Name="Visita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegistroFecha_Estadio">
+          <End Role="Estadio" Type="Self.Estadio" Multiplicity="1" />
+          <End Role="RegistroFecha" Type="Self.RegistroFecha" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estadio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistroFecha">
+              <PropertyRef Name="Estadio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Huella_Jugador">
+          <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+          <End Role="Huella" Type="Self.Huella" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jugador">
+              <PropertyRef Name="Rut" />
+            </Principal>
+            <Dependent Role="Huella">
+              <PropertyRef Name="RutJugador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RegsitroPartido">
+          <End Role="RegistroFecha" Type="Self.RegistroFecha" Multiplicity="1" />
+          <End Role="Partido" Type="Self.Partido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegistroFecha">
+              <PropertyRef Name="Fecha" />
+            </Principal>
+            <Dependent Role="Partido">
+              <PropertyRef Name="FechaPartido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SoccerManagerV1Entities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Equipo" EntityType="Self.Equipo" />
+          <EntitySet Name="Estadio" EntityType="Self.Estadio" />
+          <EntitySet Name="Huella" EntityType="Self.Huella" />
+          <EntitySet Name="Jugador" EntityType="Self.Jugador" />
+          <EntitySet Name="Partido" EntityType="Self.Partido" />
+          <EntitySet Name="RegistroFecha" EntityType="Self.RegistroFecha" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TablaPosiciones" EntityType="Self.TablaPosiciones" />
+          <AssociationSet Name="fk_Equipo" Association="Self.fk_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="TablaPosiciones" EntitySet="TablaPosiciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jugador_Equipo" Association="Self.FK_Jugador_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Jugador" EntitySet="Jugador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partido_Equipo" Association="Self.FK_Partido_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Partido" EntitySet="Partido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partido_Equipo1" Association="Self.FK_Partido_Equipo1">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Partido" EntitySet="Partido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegistroFecha_Estadio" Association="Self.FK_RegistroFecha_Estadio">
+            <End Role="Estadio" EntitySet="Estadio" />
+            <End Role="RegistroFecha" EntitySet="RegistroFecha" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Huella_Jugador" Association="Self.FK_Huella_Jugador">
+            <End Role="Jugador" EntitySet="Jugador" />
+            <End Role="Huella" EntitySet="Huella" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RegsitroPartido" Association="Self.fk_RegsitroPartido">
+            <End Role="RegistroFecha" EntitySet="RegistroFecha" />
+            <End Role="Partido" EntitySet="Partido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SoccerManagerV1Model1StoreContainer" CdmEntityContainer="SoccerManagerV1Entities3">
+          <EntitySetMapping Name="Equipo">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.Equipo">
+              <MappingFragment StoreEntitySet="Equipo">
+                <ScalarProperty Name="NombreEquipo" ColumnName="NombreEquipo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EstadioEquipo" ColumnName="EstadioEquipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estadio">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.Estadio">
+              <MappingFragment StoreEntitySet="Estadio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Estadio1" ColumnName="Estadio" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Huella">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.Huella">
+              <MappingFragment StoreEntitySet="Huella">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RutJugador" ColumnName="RutJugador" />
+                <ScalarProperty Name="Huella1" ColumnName="Huella" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jugador">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.Jugador">
+              <MappingFragment StoreEntitySet="Jugador">
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="DV" ColumnName="DV" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaNac" ColumnName="FechaNac" />
+                <ScalarProperty Name="EquipoJugador" ColumnName="EquipoJugador" />
+                <ScalarProperty Name="EstadoSuspencion" ColumnName="EstadoSuspencion" />
+                <ScalarProperty Name="TarjetaAmarilla" ColumnName="TarjetaAmarilla" />
+                <ScalarProperty Name="Gol" ColumnName="Gol" />
+                <ScalarProperty Name="CantPartido" ColumnName="CantPartido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partido">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.Partido">
+              <MappingFragment StoreEntitySet="Partido">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="GolesLocal" ColumnName="GolesLocal" />
+                <ScalarProperty Name="GolesVisita" ColumnName="GolesVisita" />
+                <ScalarProperty Name="FechaPartido" ColumnName="FechaPartido" />
+                <ScalarProperty Name="Local" ColumnName="Local" />
+                <ScalarProperty Name="Visita" ColumnName="Visita" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistroFecha">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.RegistroFecha">
+              <MappingFragment StoreEntitySet="RegistroFecha">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estadio" ColumnName="Estadio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TablaPosiciones">
+            <EntityTypeMapping TypeName="SoccerManagerV1Model1.TablaPosiciones">
+              <MappingFragment StoreEntitySet="TablaPosiciones">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreEqui" ColumnName="NombreEqui" />
+                <ScalarProperty Name="PatidoJugado" ColumnName="PatidoJugado" />
+                <ScalarProperty Name="GolFav" ColumnName="GolFav" />
+                <ScalarProperty Name="GolCont" ColumnName="GolCont" />
+                <ScalarProperty Name="GolDif" ColumnName="GolDif" />
+                <ScalarProperty Name="Puntos" ColumnName="Puntos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

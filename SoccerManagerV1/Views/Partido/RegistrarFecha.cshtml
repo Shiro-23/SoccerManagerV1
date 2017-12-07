@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "RegistrarFecha";
+}
+
+<h2>RegistrarFecha</h2>
+
+<fieldset>
+    <legend>Formulario registro de jugador</legend>
+    @using (@Html.BeginForm("RegistroHuella", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <span class="col-md-2">
+                Equipo:
+            </span>
+            <span class="col-md-6">
+                @Html.DropDownList("estadio", new List<SelectListItem>
+       {
+
+       },
+                    new { @class = "form-control" }
+                    )
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="col-md-2">
+                Fecha:
+            </span>
+            <span class="col-md-6">
+                @Html.TextBox("fecha", null, new { @class = "form-control", placeholder = "Nombre del Equipo" })
+            </span>
+        </div>
+        <div>
+            <table class="table table-responsive table-bordered">
+                <thead>
+                <th>Hora</th>
+                <th>Local</th>
+                <th>V/S</th>
+                <th>Visita</th>
+                </thead>
+                <tbody>
+                   <!--foreach ( )--> 
+                    {
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Volver</button>
+            <button type="submit" class="btn btn-primary">Publicar</button>
+        </div>
+    }
+</fieldset>

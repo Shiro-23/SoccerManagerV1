@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "RegistroHuella";
+}
+
+<h2>RegistroHuella</h2>
+
+<fieldset>
+    <legend>Formulario registro de jugador</legend>
+    @using (@Html.BeginForm("RegistrarJugador", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <span class="col-md-2">
+                Rut:
+            </span>
+            <span class="col-md-2">
+                
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="col-md-2">
+                Nombre:
+            </span>
+            <span class="col-md-2">
+
+            </span>
+            
+        </div>
+        <div class="form-group">
+            <span class="col-md-2">
+                Apellido:
+            </span>
+            <span class="col-md-2">
+
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail" >
+                    
+                </a>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Volver</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    }
+</fieldset>
+
